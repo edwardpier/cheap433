@@ -1,4 +1,8 @@
 #! /usr/bin/python3
+##########################################################################
+# Converts the raw tick level output of rx2 to time/interval/duration
+# This is not necessary for the analyzer to input the data.
+##########################################################################
 
 
 tick0 = None
