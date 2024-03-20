@@ -1,0 +1,12 @@
+data samples
+set real = read(1)
+set imag = read(2)
+
+set power = real*real + imag*imag
+set i = loop(1,dimen(power))
+
+clear all
+connect i, power
+limits
+
+layout 1,1,fill

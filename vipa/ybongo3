@@ -1,0 +1,8 @@
+data binned
+set power = read(1)
+set i = loop(1, dimen(power))
+
+clear all
+connect i, power
+limits
+layout 1,1,fill

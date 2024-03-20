@@ -1,0 +1,9 @@
+data pulses
+set time = read(1)
+set duration = read(2)
+
+
+clear all
+points time, duration
+limits
+layout 1,1,fill

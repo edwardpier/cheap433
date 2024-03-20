@@ -1,0 +1,327 @@
+version: 3.1.7
+module: rtl
+    category: 
+    description:
+        brief: 
+        details: 
+    end:
+end:
+chain:
+    modules:
+        module: RTLSDR/RawReceiver
+            name: raw_receiver
+            comment: 
+            trace: 0
+            error: 3
+            x: 40
+            y: 30
+            parambox: 1
+            debugbox: 1
+            param: host = localhost
+            param: port = 1234
+            param: frequency = 433000000
+        end:
+        module: Plumbing/Buffer
+            name: buffer
+            comment: 
+            trace: 0
+            error: 3
+            x: 685
+            y: 30
+            parambox: 0
+            debugbox: 0
+            param: size = 16
+        end:
+        module: Plumbing/Pump
+            name: pump-2
+            comment: 
+            trace: 0
+            error: 3
+            x: 478
+            y: 30
+            parambox: 0
+            debugbox: 0
+        end:
+        module: FFT/PowerSpectrum
+            name: power_spectrum
+            comment: 
+            trace: 0
+            error: 3
+            x: 1252
+            y: 30
+            parambox: 0
+            debugbox: 0
+            param: sqrt = false
+        end:
+        module: Plot/ArrayPlotter
+            name: array_plotter
+            comment: 
+            trace: 0
+            error: 3
+            x: 1551
+            y: 8
+            parambox: 0
+            debugbox: 0
+        end:
+        module: QWT/QWTPlot
+            name: q_w_t_plot
+            comment: 
+            trace: 0
+            error: 3
+            x: 1970
+            y: 8
+            parambox: 0
+            debugbox: 0
+            param: xlabel = ""
+            param: ylabel = ""
+        end:
+        module: Plumbing/Pump
+            name: pump
+            comment: 
+            trace: 0
+            error: 3
+            x: 1758
+            y: 8
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Numbers/ArraytoNumbers
+            name: arrayto_numbers
+            comment: 
+            trace: 0
+            error: 3
+            x: 1573
+            y: 473
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Plumbing/Tap
+            name: tap
+            comment: 
+            trace: 0
+            error: 3
+            x: 896
+            y: 30
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Plumbing/Pump
+            name: pump-3
+            comment: 
+            trace: 0
+            error: 3
+            x: 2265
+            y: 587
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Plumbing/Buffer
+            name: buffer-3
+            comment: 
+            trace: 0
+            error: 3
+            x: 1122
+            y: 473
+            parambox: 0
+            debugbox: 0
+            param: size = 1024
+        end:
+        module: Plumbing/Shutoff
+            name: shutoff
+            comment: 
+            trace: 0
+            error: 3
+            x: 277
+            y: 30
+            parambox: 0
+            debugbox: 0
+            param: keep_last = false
+        end:
+        module: Booleans/BooleanConstant
+            name: boolean_constant
+            comment: 
+            trace: 0
+            error: 3
+            x: 47
+            y: 281
+            parambox: 1
+            debugbox: 0
+            param: value = false
+        end:
+        module: Numbers/ComplexComponents
+            name: complex_components
+            comment: 
+            trace: 0
+            error: 3
+            x: 1334
+            y: 473
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Numbers/ArraytoNumbers
+            name: arrayto_numbers-2
+            comment: 
+            trace: 0
+            error: 3
+            x: 1810
+            y: 809
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Map/EmptyMap
+            name: empty_map
+            comment: 
+            trace: 0
+            error: 3
+            x: 1565
+            y: 156
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Map/MapFieldSetter
+            name: map_field_setter
+            comment: 
+            trace: 0
+            error: 3
+            x: 1829
+            y: 429
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Map/MapFieldSetter
+            name: map_field_setter-2
+            comment: 
+            trace: 0
+            error: 3
+            x: 2058
+            y: 587
+            parambox: 0
+            debugbox: 0
+        end:
+        module: Strings/StringConstant
+            name: string_constant
+            comment: 
+            trace: 0
+            error: 3
+            x: 1567
+            y: 271
+            parambox: 1
+            debugbox: 0
+            param: value = real
+        end:
+        module: Strings/StringConstant
+            name: string_constant-2
+            comment: 
+            trace: 0
+            error: 3
+            x: 1831
+            y: 609
+            parambox: 1
+            debugbox: 0
+            param: value = imag
+        end:
+        module: Tables/MapTableWriter
+            name: map_table_writer
+            comment: 
+            trace: 0
+            error: 3
+            x: 2472
+            y: 587
+            parambox: 1
+            debugbox: 0
+            param: filename = samples
+            param: separator = " "
+            param: header_prefix = #
+        end:
+    end:
+    connections:
+        connection:
+            from: raw_receiver.out
+            to: shutoff.in
+        end:
+        connection:
+            from: buffer.out
+            to: tap.in
+        end:
+        connection:
+            from: pump-2.out
+            to: buffer.in
+        end:
+        connection:
+            from: power_spectrum.out
+            to: array_plotter.y
+        end:
+        connection:
+            from: array_plotter.curve
+            to: pump.in
+        end:
+        connection:
+            from: pump.out
+            to: q_w_t_plot.in
+        end:
+        connection:
+            from: arrayto_numbers.out
+            to: map_field_setter.value
+        end:
+        connection:
+            from: tap.out
+            to: power_spectrum.in
+        end:
+        connection:
+            from: tap.tap
+            to: buffer-3.in
+        end:
+        connection:
+            from: pump-3.out
+            to: map_table_writer.in
+        end:
+        connection:
+            from: buffer-3.out
+            to: complex_components.in
+        end:
+        connection:
+            from: shutoff.out
+            to: pump-2.in
+        end:
+        connection:
+            from: boolean_constant.out
+            to: shutoff.stop
+        end:
+        connection:
+            from: complex_components.real
+            to: arrayto_numbers.in
+        end:
+        connection:
+            from: complex_components.imag
+            to: arrayto_numbers-2.in
+        end:
+        connection:
+            from: arrayto_numbers-2.out
+            to: map_field_setter-2.value
+        end:
+        connection:
+            from: empty_map.out
+            to: map_field_setter.in
+        end:
+        connection:
+            from: map_field_setter.out
+            to: map_field_setter-2.in
+        end:
+        connection:
+            from: map_field_setter-2.out
+            to: pump-3.in
+        end:
+        connection:
+            from: string_constant.out
+            to: map_field_setter.key
+        end:
+        connection:
+            from: string_constant-2.out
+            to: map_field_setter-2.key
+        end:
+    end:
+end:
+comments:
+end:
+parameters:
+end:

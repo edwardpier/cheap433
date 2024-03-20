@@ -1,0 +1,7 @@
+data samples
+set real = read(1)
+set imag = read(2)
+
+clear all
+points real, imag
+limits
